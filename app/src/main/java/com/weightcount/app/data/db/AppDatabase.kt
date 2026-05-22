@@ -59,7 +59,7 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 CoroutineScope(Dispatchers.IO).launch {
                     val tagDao = database.tagDao()
-                    val presets = listOf("饭前", "饭后", "睡前")
+                    val presets = listOf("空腹", "晨起", "饭前", "饭后", "睡前")
                     presets.forEachIndexed { index, name ->
                         try {
                             tagDao.insertTag(Tag(name = name, isPreset = true, sortOrder = index))

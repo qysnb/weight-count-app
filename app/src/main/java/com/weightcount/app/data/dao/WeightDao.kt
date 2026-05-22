@@ -27,6 +27,10 @@ interface WeightDao {
     fun getRecordsInRange(startTime: Long, endTime: Long): Flow<List<WeightRecordWithTags>>
 
     @Transaction
+    @Query("SELECT * FROM weight_records WHERE timestamp >= :startTime AND timestamp <= :endTime AND id IN (SELECT recordId FROM record_tag_cross_ref WHERE tagId = :tagId) ORDER BY timestamp ASC")
+    fun getRecordsInRangeWithTag(startTime: Long, endTime: Long, tagId: Long): Flow<List<WeightRecordWithTags>>
+
+    @Transaction
     @Query("SELECT * FROM weight_records WHERE id = :id")
     suspend fun getRecordWithTagsById(id: Long): WeightRecordWithTags?
 

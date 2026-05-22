@@ -21,6 +21,9 @@ class WeightRepository(
     fun getRecordsInRange(startTime: Long, endTime: Long): Flow<List<WeightRecordWithTags>> =
         weightDao.getRecordsInRange(startTime, endTime)
 
+    fun getRecordsInRangeWithTag(startTime: Long, endTime: Long, tagId: Long): Flow<List<WeightRecordWithTags>> =
+        weightDao.getRecordsInRangeWithTag(startTime, endTime, tagId)
+
     suspend fun getRecordWithTagsById(id: Long): WeightRecordWithTags? =
         weightDao.getRecordWithTagsById(id)
 
