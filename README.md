@@ -78,10 +78,6 @@ An Android weight tracking application supporting weight recording, custom tags,
 
 APK location: `app/build/outputs/apk/debug/app-debug.apk`
 
-## Screenshots
-
-![Schematic diagram](screenshots/Schematic%20diagram.jpg)
-
 ## License
 
 MIT license
