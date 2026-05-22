@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Scale base -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,66 L70,66 L66,74 L42,74 Z" />
+    <!-- Scale needle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,62 L54,46 M54,46 L48,50 M54,46 L60,50"
+        android:strokeWidth="2.5"
+        android:strokeColor="#FFFFFF" />
+    <!-- Scale bar -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,54 L66,54"
+        android:strokeWidth="1.5"
+        android:strokeColor="#FFFFFF" />
+    <!-- Weight plate left -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M35,66 C33,66 31,64 31,62 C31,60 33,58 35,58 C37,58 39,60 39,62 C39,64 37,66 35,66 Z" />
+    <!-- Weight plate right -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M73,66 C71,66 69,64 69,62 C69,60 71,58 73,58 C75,58 77,60 77,62 C77,64 75,66 73,66 Z" />
+</vector>
