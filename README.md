@@ -39,4 +39,49 @@ APK 文件位置：`app/build/outputs/apk/debug/app-debug.apk`
 
 ## 许可证
 
-MIT
+MIT license
+
+---
+
+# Weight Count App
+
+An Android weight tracking application supporting weight recording, custom tags, chart reports, and periodic statistics.
+
+## Tech Stack
+
+- **Language**: Kotlin
+- **UI**: Jetpack Compose + Material 3 (Dynamic Color)
+- **Architecture**: MVVM + Repository
+- **Database**: Room (SQLite)
+- **Data Persistence**: DataStore Preferences
+- **Charts**: Custom Canvas drawing
+
+## Features
+
+- **Tagged Recording**: Add custom tags (e.g., "before bed", "after meal") to each weight record for later categorization and analysis
+- **Flexible Data Management**: Full CRUD operations with minute precision (e.g., 16:37) and automatic chronological sorting. Quickly navigate to any year, month, day, or hour through the graphical interface
+- **Smart Line Chart Reports**: Auto-generated line charts with min, max, and average values to visualize weight trends. Interact with the chart by tapping any date to view detailed records
+- **Multi-dimensional Filtering**: Filter by date range and tag type (e.g., view only "before bed" data) within the chart interface for in-depth analysis of weight patterns under specific conditions
+- **Settings**: Theme switching, unit switching, tag management, period configuration, target weight setting
+
+## Requirements
+
+- Android 8.0 (API 26) or higher
+- Gradle 8.x
+- Android Studio Hedgehog or newer
+
+## Build
+
+```bash
+./gradlew assembleDebug
+```
+
+APK location: `app/build/outputs/apk/debug/app-debug.apk`
+
+## Screenshots
+
+<!-- Add screenshots here -->
+
+## License
+
+MIT license
