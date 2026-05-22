@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -31,6 +32,7 @@ class SettingsDataStore(private val context: Context) {
         private val CHART_90D_LABEL_KEY = stringPreferencesKey("chart_90d_label")
         private val CHART_180D_LABEL_KEY = stringPreferencesKey("chart_180d_label")
         private val CHART_YEAR_LABEL_KEY = stringPreferencesKey("chart_year_label")
+        private val TUTORIAL_COMPLETED_KEY = booleanPreferencesKey("tutorial_completed")
     }
 
     val chart7dDays: Flow<Int> = context.dataStore.data.map { prefs ->
@@ -71,6 +73,16 @@ class SettingsDataStore(private val context: Context) {
 
     val chart180dLabel: Flow<String> = context.dataStore.data.map { prefs ->
         prefs[CHART_180D_LABEL_KEY] ?: "180日"
+    }
+
+    val tutorialCompleted: Flow<Boolean> = context.dataStore.data.map { prefs ->
+        prefs[TUTORIAL_COMPLETED_KEY] ?: false
+    }
+
+    suspend fun setTutorialCompleted(completed: Boolean) {
+        context.dataStore.edit { prefs ->
+            prefs[TUTORIAL_COMPLETED_KEY] = completed
+        }
     }
 
     private val dayConfigs: Flow<Map<String, Int>> = combine(

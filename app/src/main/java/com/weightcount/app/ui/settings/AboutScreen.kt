@@ -62,7 +62,7 @@ fun AboutScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "v1.7.0",
+                text = "v2.3.0",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -101,7 +101,7 @@ fun AboutScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
             Text(
-                text = "开发者: Qyforest",
+                text = "开发者: Qysnb with DeepSeek V4 Flash",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

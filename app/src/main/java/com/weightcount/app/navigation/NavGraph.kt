@@ -14,6 +14,7 @@ import com.weightcount.app.ui.settings.SettingsScreen
 fun NavGraph(
     navController: NavHostController,
     onNavigateToAbout: () -> Unit,
+    onRestartTutorial: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -31,7 +32,8 @@ fun NavGraph(
 
         composable(Screen.Settings.route) {
             SettingsScreen(
-                onNavigateToAbout = onNavigateToAbout
+                onNavigateToAbout = onNavigateToAbout,
+                onRestartTutorial = onRestartTutorial
             )
         }
 

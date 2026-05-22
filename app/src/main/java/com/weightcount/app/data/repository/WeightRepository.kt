@@ -35,9 +35,7 @@ class WeightRepository(
             tagDao.insertAllCrossRefs(tagIds.map { RecordTagCrossRef(recordId, it) })
         }
         return recordId
-    }
-
-    suspend fun updateRecord(id: Long, weight: Double, timestamp: Long, tagIds: List<Long>, note: String? = null) {
+    }    suspend fun updateRecord(id: Long, weight: Double, timestamp: Long, tagIds: List<Long>, note: String? = null) {
         weightDao.updateRecord(WeightRecord(id = id, weight = weight, timestamp = timestamp, note = note))
         tagDao.deleteCrossRefsForRecord(id)
         if (tagIds.isNotEmpty()) {

@@ -331,6 +331,10 @@ fun WeightChart(
             .padding(start = 8.dp, end = 8.dp)
             .pointerInput(sortedData) {
                 detectTapGestures { offset ->
+                    if (sortedData.size == 1) {
+                        onPointIndexChange(if (selectedPointIndex == -1) 0 else -1)
+                        return@detectTapGestures
+                    }
                     if (sortedData.size < 2) return@detectTapGestures
 
                     val leftPadding = 48.dp.toPx()
@@ -350,8 +354,6 @@ fun WeightChart(
                 }
             }
     ) {
-        if (sortedData.size < 2) return@Canvas
-
         val leftPadding = 48.dp.toPx()
         val bottomPadding = 48.dp.toPx()
         val topPadding = 16.dp.toPx()
@@ -359,8 +361,8 @@ fun WeightChart(
         val chartWidth = size.width - leftPadding - rightPadding
         val chartHeight = size.height - bottomPadding - topPadding
 
-        val minWeight = sortedData.minOf { it.weight }
-        val maxWeight = sortedData.maxOf { it.weight }
+        val minWeight = sortedData.minOfOrNull { it.weight } ?: 0.0
+        val maxWeight = sortedData.maxOfOrNull { it.weight } ?: 100.0
         val weightRange = if (maxWeight - minWeight < 0.1) 1.0 else maxWeight - minWeight
 
         val yPadding = weightRange * 0.1
@@ -387,6 +389,57 @@ fun WeightChart(
                 y + 4.dp.toPx(),
                 yLabelPaint
             )
+        }
+
+        if (sortedData.size < 2) {
+            if (sortedData.size == 1) {
+                val point = sortedData.first()
+                val cx = leftPadding + chartWidth / 2
+                val cy = topPadding + chartHeight * ((yMax - point.weight) / yRange).toFloat()
+
+                // Single data point circle
+                drawCircle(color = Color.White, radius = 5.dp.toPx(), center = Offset(cx, cy))
+                drawCircle(color = lineColor, radius = 4.dp.toPx(), center = Offset(cx, cy))
+
+                // Date label
+                drawContext.canvas.nativeCanvas.drawText(
+                    dateFormat.format(Date(point.timestamp)),
+                    cx,
+                    size.height - 12.dp.toPx(),
+                    textPaint
+                )
+
+                // Tooltip if selected
+                if (selectedPointIndex == 0) {
+                    val dateLine = dayFormat.format(Date(point.timestamp))
+                    val timeLine = String.format(Locale.CHINA, "%s  %.1f kg", timeFormat.format(Date(point.timestamp)), point.weight)
+                    val tagLines = buildTagLines(point.tags)
+                    val lineHeight = 14.dp.toPx()
+                    val totalLines = 2 + tagLines.size
+                    val tooltipWidth = 140.dp.toPx()
+                    val tooltipHeight = 8.dp.toPx() + lineHeight * (totalLines + 0.5f)
+                    var tooltipX = cx - tooltipWidth / 2
+                    val tooltipY = (cy - tooltipHeight - 12.dp.toPx()).coerceAtLeast(0f)
+                    tooltipX = tooltipX.coerceIn(0f, size.width - tooltipWidth)
+
+                    drawRoundRect(
+                        color = Color(0xFF3C3C3C),
+                        topLeft = Offset(tooltipX, tooltipY),
+                        size = androidx.compose.ui.geometry.Size(tooltipWidth, tooltipHeight),
+                        cornerRadius = CornerRadius(8.dp.toPx(), 8.dp.toPx())
+                    )
+
+                    drawContext.canvas.nativeCanvas.drawText(dateLine, tooltipX + tooltipWidth / 2, tooltipY + 6.dp.toPx() + lineHeight, tipTextPaint)
+                    drawContext.canvas.nativeCanvas.drawText(timeLine, tooltipX + tooltipWidth / 2, tooltipY + 6.dp.toPx() + lineHeight * 2, tipTextPaint)
+                    tagLines.forEachIndexed { i, line ->
+                        drawContext.canvas.nativeCanvas.drawText(line, tooltipX + tooltipWidth / 2, tooltipY + 6.dp.toPx() + (2 + i) * lineHeight, tipTextPaint)
+                    }
+
+                    drawCircle(color = lineColor, radius = 8.dp.toPx(), center = Offset(cx, cy))
+                    drawCircle(color = Color.White, radius = 4.dp.toPx(), center = Offset(cx, cy))
+                }
+            }
+            return@Canvas
         }
 
         val timeMin = sortedData.first().timestamp
@@ -449,19 +502,16 @@ fun WeightChart(
             val timeLine = String.format(Locale.CHINA, "%s  %.1f kg", timeFormat.format(Date(tipPoint.timestamp)), tipPoint.weight)
             val tagLines = buildTagLines(tipPoint.tags)
 
-            // Calculate tooltip dimensions
             val lineHeight = 14.dp.toPx()
             val totalLines = 2 + tagLines.size
             val tooltipWidth = 140.dp.toPx()
             val tooltipHeight = 8.dp.toPx() + lineHeight * (totalLines + 0.5f)
-            val paddingX = 6.dp.toPx()
             val textStartY = 6.dp.toPx() + lineHeight
 
             var tooltipX = tipPos.x - tooltipWidth / 2
             val tooltipY = (tipPos.y - tooltipHeight - 12.dp.toPx()).coerceAtLeast(0f)
             tooltipX = tooltipX.coerceIn(0f, size.width - tooltipWidth)
 
-            // Background
             drawRoundRect(
                 color = Color(0xFF3C3C3C),
                 topLeft = Offset(tooltipX, tooltipY),
@@ -490,7 +540,6 @@ fun WeightChart(
                 )
             }
 
-            // Highlight point
             drawCircle(color = lineColor, radius = 8.dp.toPx(), center = tipPos)
             drawCircle(color = Color.White, radius = 4.dp.toPx(), center = tipPos)
         }

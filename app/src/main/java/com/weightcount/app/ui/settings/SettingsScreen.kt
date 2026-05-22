@@ -36,6 +36,7 @@ import com.weightcount.app.data.datastore.PeriodConfig
 @Composable
 fun SettingsScreen(
     onNavigateToAbout: () -> Unit,
+    onRestartTutorial: () -> Unit = {},
     viewModel: SettingsViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -84,6 +85,31 @@ fun SettingsScreen(
         item {
             Spacer(modifier = Modifier.height(16.dp))
             SettingsSectionHeader("其他")
+        }
+
+        item {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onRestartTutorial() },
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 1.dp
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("使用教程", style = MaterialTheme.typography.bodyLarge)
+                    Icon(
+                        Icons.Default.ChevronRight,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
         }
 
         item {
