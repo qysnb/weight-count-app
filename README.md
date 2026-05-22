@@ -35,7 +35,7 @@ APK 文件位置：`app/build/outputs/apk/debug/app-debug.apk`
 
 ## 截图
 
-<!-- 可后续添加截图 -->
+![Schematic diagram](screenshots/Schematic%20diagram.jpg)
 
 ## 许可证
 
@@ -80,7 +80,7 @@ APK location: `app/build/outputs/apk/debug/app-debug.apk`
 
 ## Screenshots
 
-<!-- Add screenshots here -->
+![Schematic diagram](screenshots/Schematic%20diagram.jpg)
 
 ## License
 
